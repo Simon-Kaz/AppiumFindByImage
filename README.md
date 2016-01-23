@@ -1,6 +1,6 @@
 # AppiumFindByImage
 
-Appium Framework integrated with Sikuli API to provide OCR capability. 
+Appium Framework integrated with Sikuli API to provide Image Recognition capability. 
 
 Current helper methods:
 clickByImage - find an image and click in the centre of it.
