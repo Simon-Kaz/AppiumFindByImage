@@ -1,6 +1,6 @@
 # AppiumFindByImage
 
-Appium Framework integrated with SikuliX API to provide image recognition capability.
+Appium Framework integrated with SikuliX API to provide Image Recognition capability.
 
 The test suite with example usage is for the [Neko Atsume][nekoAtsumeURL] app on Android.
 
