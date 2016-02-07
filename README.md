@@ -4,7 +4,9 @@ Appium Framework integrated with SikuliX API to provide Image Recognition capabi
 
 The test suite with example usage is for the [Neko Atsume][nekoAtsumeURL] app on Android.
 
-See one of the tests running below:
+See one of the tests running below.
+
+
 ![TestGif][testGif]
 
 [testGif]: ./src/main/resources/testRun.gif
