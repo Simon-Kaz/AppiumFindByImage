@@ -7,5 +7,5 @@ The test suite with example usage is for the [Neko Atsume][nekoAtsumeURL] app on
 See one of the tests running below:
 ![TestGif][testGif]
 
-[testGif]: ./resources/testRun.gif
+[testGif]: ./src/main/resources/testRun.gif
 [nekoAtsumeURL]: https://play.google.com/store/apps/details?id=jp.co.hit_point.nekoatsume&hl=en
