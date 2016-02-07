@@ -1,8 +1,11 @@
 # AppiumFindByImage
 
-Appium Framework integrated with Sikuli API to provide OCR capability. 
+Appium Framework integrated with SikuliX API to provide image recognition capability.
 
-Current helper methods:
-clickByImage - find an image and click in the centre of it.
-elementExists - returns true if an element has been found on the screen (via provided image)
-waitUntilImageExists - WebDriver explicit wait extension that allows waiting for an image to appear on the screen.
+The test suite with example usage is for the [Neko Atsume][nekoAtsumeURL] app on Android.
+
+See one of the tests running below:
+![TestGif][testGif]
+
+[testGif]: ./resources/testRun.gif
+[nekoAtsumeURL]: https://play.google.com/store/apps/details?id=jp.co.hit_point.nekoatsume&hl=en
