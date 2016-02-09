@@ -1,72 +1,48 @@
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.basics.Settings;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.net.URL;
+import java.io.IOException;
+
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class OCRTest {
+
     private AppiumDriver driver;
-    private WebDriverWait wait;
-    private OCR OCR;
-    private File imgDir;
+    private OCR ocr;
+
+    private static String imgDir = System.getProperty("user.dir") + "/src/main/resources/";
+    private static double DEFAULT_MIN_SIMILARITY = 0.8;
 
     @Before
     public void setUp() throws Exception {
-
-        //Appium setup for the app
-        //needs to be installed on target device before the test
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("appPackage", "jp.co.hit_point.nekoatsume");
-        capabilities.setCapability("appActivity", "jp.co.hit_point.nekoatsume.GActivity");
-        capabilities.setCapability("deviceName", "Android Emulator");
-        capabilities.setCapability("platformVersion", "5.0.1");
-
-        driver = new AndroidDriver(new URL("http://0.0.0.0:4723/wd/hub"), capabilities);
-        wait = new WebDriverWait(driver, 10);
-
-        //Sikuli settings
-        OCR = new OCR(driver);
-        Settings.MinSimilarity = 0.8;
-
-        //location of screenshots
-        File classpathRoot = new File(System.getProperty("user.dir"));
-        imgDir = new File(classpathRoot, "src/main/resources");
-
-        //switch to native app + portrait mode
-        driver.context("NATIVE_APP");
-        driver.rotate(ScreenOrientation.PORTRAIT);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        driver.quit();
+        ocr = new OCR(driver);
     }
 
     @Test
-    public void gatherAllGiftsTest() throws InterruptedException {
-        String giftsAwaitImgLoc = imgDir + "/giftsAwait.png";
-        String acceptAllImgLoc = imgDir + "/acceptAll.png";
+    public void testGetCoordsWithSetMinSimilarity_revertsToDefaultMinSimilarity() throws Exception {
+        String imageName = "acceptAll.png";
+        String imageLocation = imgDir + imageName;
+        BufferedImage testImg = convertImgFileToBufferedImage(imageLocation);
 
-        OCR.waitUntilImageExists(giftsAwaitImgLoc, 30);
-        OCR.clickByImage(giftsAwaitImgLoc);
-        OCR.waitUntilImageExists(acceptAllImgLoc, 10);
-        OCR.clickByImage(acceptAllImgLoc);
+        assertThat("default minSimilarity should be used", Settings.MinSimilarity, is(DEFAULT_MIN_SIMILARITY));
+        ocr.getCoords(testImg, imageLocation, 0.9);
+        assertThat("minSimilarity should revert back to default", Settings.MinSimilarity, is(DEFAULT_MIN_SIMILARITY));
     }
 
-    @Test
-    public void refillTest() throws InterruptedException {
-        String foodBowlImgLoc = imgDir + "/foodBowl.png";
-        String yesBowlImgLoc = imgDir + "/yesBowl.png";
 
-        OCR.waitUntilImageExists(foodBowlImgLoc, 30);
-        OCR.clickByImage(foodBowlImgLoc);
-        OCR.clickByImage(yesBowlImgLoc);
+    private BufferedImage convertImgFileToBufferedImage(String imagePath){
+        BufferedImage in = null;
+        try {
+            in = ImageIO.read(new File(imagePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return in;
     }
 }
