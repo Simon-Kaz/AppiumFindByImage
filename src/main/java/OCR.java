@@ -23,6 +23,7 @@ The MIT License (MIT)
 */
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
@@ -68,6 +69,26 @@ public class OCR {
         Point2D coords = getCoords(takeScreenshot(), targetImgPath, minSimilarityValue);
         if ((coords.getX() >= 0) && (coords.getY() >= 0)) {
             driver.tap(1, (int) coords.getX(), (int) coords.getY(), 100);
+        } else {
+            throw new ElementNotVisibleException("Element not found - " + targetImgPath);
+        }
+    }
+    // Convenience method to long press an element on screen with 1 second press duration
+    public void longPressByImage(String targetImgPath) {
+        Point2D coords = getCoords(takeScreenshot(), targetImgPath);
+        if ((coords.getX() >= 0) && (coords.getY() >= 0)) {
+            TouchAction touchA = new TouchAction(driver);
+            touchA.longPress((int) coords.getX(), (int) coords.getY(), 1000).release().perform();
+        } else {
+            throw new ElementNotVisibleException("Element not found - " + targetImgPath);
+        }
+    }
+    // Convenience method to long press an element on screen with customisable press duration
+    public void longPressByImage(String targetImgPath, int pressDuration) {
+        Point2D coords = getCoords(takeScreenshot(), targetImgPath);
+        if ((coords.getX() >= 0) && (coords.getY() >= 0)) {
+            TouchAction touchA = new TouchAction(driver);
+            touchA.longPress((int) coords.getX(), (int) coords.getY(), pressDuration).release().perform();
         } else {
             throw new ElementNotVisibleException("Element not found - " + targetImgPath);
         }

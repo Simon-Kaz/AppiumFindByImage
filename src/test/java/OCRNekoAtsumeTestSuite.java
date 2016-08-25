@@ -43,12 +43,12 @@ public class OCRNekoAtsumeTestSuite {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         driver.quit();
     }
 
     @Test
-    public void gatherAllGiftsTest() throws InterruptedException {
+    public void gatherAllGiftsTest() {
         String giftsAwaitImgLoc = imgDir + "/giftsAwait.png";
         String acceptAllImgLoc = imgDir + "/acceptAll.png";
 
@@ -59,12 +59,22 @@ public class OCRNekoAtsumeTestSuite {
     }
 
     @Test
-    public void refillTest() throws InterruptedException {
+    public void refillTest() {
         String foodBowlImgLoc = imgDir + "/foodBowl.png";
         String yesBowlImgLoc = imgDir + "/yesBowl.png";
 
         OCR.waitUntilImageExists(foodBowlImgLoc, 30);
         OCR.clickByImage(foodBowlImgLoc);
         OCR.clickByImage(yesBowlImgLoc);
+    }
+
+    @Test
+    public void refillWithLongPressTest() {
+        String foodBowlImgLoc = imgDir + "/foodBowl.png";
+        String yesBowlImgLoc = imgDir + "/yesBowl.png";
+
+        OCR.waitUntilImageExists(foodBowlImgLoc, 30);
+        OCR.longPressByImage(foodBowlImgLoc);
+        OCR.longPressByImage(yesBowlImgLoc);
     }
 }
